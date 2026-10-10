@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BRF-Tech Helm charts</title>
+<meta name="description" content="Helm charts for BRF-Tech products.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --fg: #1d2127;
+    --muted: #5b6470;
+    --code-bg: #f3f5f7;
+    --border: #dde2e8;
+    --link: #0b62c4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111418;
+      --fg: #e6e9ed;
+      --muted: #9aa4b0;
+      --code-bg: #1b2027;
+      --border: #2c333c;
+      --link: #6cb0ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1rem 3rem; }
+  h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+  h2 { font-size: 1.1rem; margin: 2rem 0 .5rem; }
+  p { margin: .5rem 0; }
+  .lead { color: var(--muted); margin-bottom: 1.5rem; }
+  a { color: var(--link); }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .75rem 1rem;
+    overflow-x: auto;
+    font-size: .9rem;
+  }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: .45rem .5rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 600; }
+  footer { margin-top: 2.5rem; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>BRF-Tech Helm charts</h1>
+  <p class="lead">A Helm repository for BRF-Tech products. Each chart is published here automatically when its product releases.</p>
+
+  <h2>Use it</h2>
+  <pre><code>helm repo add brf-tech https://helm.brf.sh
+helm repo update
+helm install filex brf-tech/filex --set ingress.host=files.example.com</code></pre>
+
+  <p>The same charts are on the GitHub Container Registry as OCI artifacts:</p>
+  <pre><code>helm install filex oci://ghcr.io/brf-tech/charts/filex --set ingress.host=files.example.com</code></pre>
+
+  <h2>Charts</h2>
+  <table>
+    <thead><tr><th>Chart</th><th>Product</th><th>Docs</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>brf-tech/filex</code></td>
+        <td><a href="https://github.com/BRF-Tech/filex">filex</a> - self-hosted file manager</td>
+        <td><a href="https://docs.filex.sh/INSTALLATION#kubernetes-helm">Install with Helm</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <p><a href="index.yaml">index.yaml</a> · <a href="https://github.com/BRF-Tech/helm-charts">github.com/BRF-Tech/helm-charts</a></p>
+  </footer>
+</main>
+</body>
+</html>
