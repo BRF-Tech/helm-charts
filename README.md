@@ -87,9 +87,11 @@ Do not edit `gh-pages` by hand: the workflow owns it.
    release to publish.
 3. Run the workflow (Actions -> publish -> Run workflow), or wait for the next
    scheduled run.
-4. After the first publish, make the new OCI package public - packages start
-   private: the package's page on GitHub -> Package settings -> Change
-   visibility -> Public. The verify step warns until this is done.
+4. After the first publish, check that the new OCI package is public. The
+   workflow's first push creates it linked to this repository, and it takes
+   the repository's visibility; if the verify step warns that an anonymous
+   pull fails, open the package's page on GitHub -> Package settings -> Change
+   visibility -> Public.
 5. Add the chart to the tables in this README and in
    [`site/index.html`](site/index.html) (the page at https://helm.brf.sh).
 

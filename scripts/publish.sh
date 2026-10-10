@@ -294,12 +294,23 @@ cmd_verify() {
       error "verify: $name-$ver.tgz is not on gh-pages"
       status=1
     fi
-    if helm pull "$OCI_REPO/$name" --version "$ver" --destination "$tmp/oci" >/dev/null 2>&1; then
-      log "ok   oci: $OCI_REPO/$name:$ver (anonymous pull)"
+    # The index digest is the sha256 of the package file, and the OCI chart
+    # layer is that same file: both ways in must hand out the same bytes.
+    local want got out
+    want=$(NAME="$name" VER="$ver" yq -r '.entries[strenv(NAME)][] | select(.version == strenv(VER)) | .digest' "$PAGES_DIR/index.yaml")
+    rm -rf "$tmp/oci" && mkdir -p "$tmp/oci"
+    if out=$(helm pull "$OCI_REPO/$name" --version "$ver" --destination "$tmp/oci" 2>&1); then
+      got=$(sha256sum "$tmp/oci/$name-$ver.tgz" | cut -d' ' -f1)
+      if [ "$got" = "$want" ]; then
+        log "ok   oci: $OCI_REPO/$name:$ver (anonymous pull, same package as the index)"
+      else
+        error "verify: $OCI_REPO/$name:$ver is not the package in the index (sha256 $got, index $want)"
+        status=1
+      fi
     elif [ "$state" = new ]; then
-      warning "verify: $OCI_REPO/$name:$ver cannot be pulled anonymously. This is the product's first chart: make the ghcr package public (README, 'Adding a product')."
+      warning "verify: $OCI_REPO/$name:$ver cannot be pulled anonymously ($out). This is the product's first chart: check that its ghcr package is public (README, 'Adding a product')."
     else
-      error "verify: $OCI_REPO/$name:$ver cannot be pulled anonymously"
+      error "verify: $OCI_REPO/$name:$ver cannot be pulled anonymously ($out)"
       status=1
     fi
     if [ -n "$live" ]; then
