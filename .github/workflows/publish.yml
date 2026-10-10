@@ -10,7 +10,9 @@ name: publish
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    # Every ten minutes, off the top of the hour: GitHub delays and drops
+    # scheduled runs most at :00, when every other schedule fires too.
+    - cron: "7-59/10 * * * *"
   repository_dispatch:
     types: [product-released]
   workflow_dispatch:
