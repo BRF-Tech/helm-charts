@@ -1,0 +1,67 @@
+# Publishes the chart of every new product release, with nobody in the loop.
+#
+# Every ten minutes (and whenever a product repository sends a
+# `product-released` repository_dispatch, or someone starts it by hand) this
+# looks at each product in products.yaml, finds its published releases that
+# have no chart in the Helm repository yet, and publishes them: OCI registry
+# first (ghcr.io/brf-tech/charts), then index.yaml + the package on gh-pages,
+# which https://helm.brf.sh serves. scripts/publish.sh has the details.
+name: publish
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  repository_dispatch:
+    types: [product-released]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Package and index, but push nothing
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  packages: write
+  actions: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+      GIT_AUTHOR_NAME: brkfun
+      GIT_AUTHOR_EMAIL: brkfun@users.noreply.github.com
+      GIT_COMMITTER_NAME: brkfun
+      GIT_COMMITTER_EMAIL: brkfun@users.noreply.github.com
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5.0.1
+        with:
+          version: v3.22.0
+
+      - name: Log in to ghcr.io
+        if: env.DRY_RUN == ''
+        run: printf '%s' "$GH_TOKEN" | helm registry login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+
+      - name: Publish new releases
+        id: publish
+        run: bash scripts/publish.sh
+
+      - name: Verify what was published
+        if: ${{ !cancelled() && env.DRY_RUN == '' && steps.publish.outputs.count != '' && steps.publish.outputs.count != '0' }}
+        run: bash scripts/publish.sh verify
+
+      # GitHub turns a scheduled workflow off after 60 days without activity
+      # in a public repository; enabling it again resets that clock.
+      - name: Keep the schedule alive
+        if: ${{ !cancelled() && github.event_name == 'schedule' }}
+        continue-on-error: true
+        run: gh api --method PUT "repos/$GITHUB_REPOSITORY/actions/workflows/publish.yml/enable"

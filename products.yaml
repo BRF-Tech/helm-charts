@@ -1,0 +1,22 @@
+# The products whose Helm charts this repository publishes.
+#
+# A chart's source lives in its product's repository; this file only says
+# where to find it. Every published release (not a draft, not a prerelease)
+# whose tag matches `tags` and is not older than `since` gets its chart
+# packaged and published by .github/workflows/publish.yml.
+#
+#   name    chart name - must equal `name:` in the chart's Chart.yaml
+#   source  GitHub repository (owner/name) the chart lives in
+#   chart   path of the chart directory inside that repository
+#   tags    release tags that carry a chart (shell glob)
+#   since   oldest release to publish
+#   skip    release tags never to publish (a release whose chart cannot be
+#           published; listing it here stops the scheduled run failing on it)
+
+products:
+  - name: filex
+    source: BRF-Tech/filex
+    chart: deploy/helm/filex
+    tags: "v*"
+    since: v0.55.0
+    skip: []
