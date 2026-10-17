@@ -2,6 +2,30 @@ apiVersion: v1
 entries:
   filex:
   - apiVersion: v2
+    appVersion: v0.57.0
+    created: "2026-10-17T06:58:42.052062365Z"
+    description: Self-hosted file manager - Go backend + Vue/React/Web Component frontend,
+      pluggable storage/auth/DB drivers, sandboxed apps, language packs, end-to-end
+      encrypted folders, reachable over HTTP, S3, SFTP, FTPS, NFS and WebDAV.
+    digest: 9dc5e10cd8bbcb6a3d713b0f2b1b5e4517c85876ef03fd7a8bfaab9f875088df
+    home: https://github.com/BRF-Tech/filex
+    keywords:
+    - file-manager
+    - self-hosted
+    - s3
+    - webdav
+    - sftp
+    - onlyoffice
+    maintainers:
+    - name: BRF-Tech
+    name: filex
+    sources:
+    - https://github.com/BRF-Tech/filex
+    type: application
+    urls:
+    - https://helm.brf.sh/filex-0.2.57.tgz
+    version: 0.2.57
+  - apiVersion: v2
     appVersion: v0.56.3
     created: "2026-10-13T14:23:28.173698119Z"
     description: Self-hosted file manager - Go backend + Vue/React/Web Component frontend,
@@ -121,4 +145,4 @@ entries:
     urls:
     - https://helm.brf.sh/filex-0.2.52.tgz
     version: 0.2.52
-generated: "2026-10-13T14:23:28.172801687Z"
+generated: "2026-10-17T06:58:42.050952224Z"
