@@ -20,3 +20,9 @@ products:
     tags: "v*"
     since: v0.55.0
     skip: []
+  - name: runr
+    source: BRF-Tech/runr
+    chart: helm
+    tags: "v*"
+    since: v0.5.7
+    skip: []

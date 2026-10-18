@@ -45,11 +45,13 @@ helm pull brf-tech/filex --untar            # the whole chart, including example
 | Chart | Product | Install guide |
 |---|---|---|
 | `brf-tech/filex` | [filex](https://github.com/BRF-Tech/filex) - self-hosted file manager | [Kubernetes (Helm)](https://docs.filex.sh/INSTALLATION#kubernetes-helm) |
+| `brf-tech/runr` | [RunR](https://github.com/BRF-Tech/runr) - serverless application platform on Kubernetes / Knative | [Kubernetes (Helm)](https://github.com/BRF-Tech/runr#kubernetes-helm) |
 
 ## Where the charts come from
 
 This repository holds no chart sources. Each chart lives in its product's
-repository (filex: [`deploy/helm/filex`](https://github.com/BRF-Tech/filex/tree/main/deploy/helm/filex)),
+repository (filex: [`deploy/helm/filex`](https://github.com/BRF-Tech/filex/tree/main/deploy/helm/filex),
+RunR: [`helm`](https://github.com/BRF-Tech/runr/tree/main/helm)),
 is versioned and reviewed there, and is released with the product. Report a
 problem with a chart in that product's issue tracker.
 
