@@ -459,6 +459,25 @@ entries:
     version: 0.2.52
   runr:
   - apiVersion: v2
+    appVersion: 0.6.10
+    created: "2026-11-12T10:24:54.838592045Z"
+    description: RunR — serverless application platform on Kubernetes / Knative (functions,
+      multi-file projects and containers with scale-to-zero)
+    digest: 65592ab9043ec8a5c85d60b0b840cdaff7f78e83ef4f8a6f72f8e39e4515fb7c
+    home: https://runr.sh
+    keywords:
+    - serverless
+    - knative
+    - faas
+    kubeVersion: '>=1.23.0-0'
+    name: runr
+    sources:
+    - https://github.com/brf-tech/runr
+    type: application
+    urls:
+    - https://helm.brf.sh/runr-0.6.10.tgz
+    version: 0.6.10
+  - apiVersion: v2
     appVersion: 0.6.9
     created: "2026-11-12T01:52:18.071632319Z"
     description: RunR — serverless application platform on Kubernetes / Knative (functions,
@@ -723,4 +742,4 @@ entries:
     urls:
     - https://helm.brf.sh/runr-0.5.7.tgz
     version: 0.5.7
-generated: "2026-11-12T01:52:18.068519064Z"
+generated: "2026-11-12T10:24:54.835261877Z"
